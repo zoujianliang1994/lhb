@@ -1,0 +1,365 @@
+.wrap {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  /*.line{
+		background:yellow;
+		width:10px;
+		height:100%;
+		position:absolute;
+		left:225px;
+		top:0;
+		cursor:w-resize;
+	}*/
+}
+.wrap.wrap-map {
+  background: url('../images/mapbg.png') center 0;
+  background-size: cover;
+}
+.wrap.wrap-map .header {
+  background: transparent;
+}
+.wrap .header {
+  width: 100%;
+  height: 60px;
+  background: #1a53b3;
+  background: -webkit-linear-gradient(left, #2795cd, #1a53b3);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, #1a53b3, #2795cd);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, #1a53b3, #2795cd);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, #1a53b3, #2795cd);
+  /* 标准的语法 */
+}
+.wrap .contentBox {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+}
+.wrap .back {
+  margin-left: 20px;
+  font-size: 13px;
+}
+.wrap .back:hover {
+  color: #108ee9;
+}
+.wrap .menu {
+  position: fixed;
+  left: 0;
+  top: 60px;
+  bottom: 0;
+  width: 240px;
+  color: #000;
+  padding: 10px;
+  background: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /*&.unactive {
+			box-shadow: none;
+			border-right: 20px solid #fff;
+		}
+		&.active {
+			box-shadow: 10px 5px 30px rgba(0,0,0,.1);
+			border-right: 5px solid #fff;
+			border-right: 5px solid #ddd\0;       !* IE8支持*!
+		}*/
+}
+.wrap .menu .treeView .treeBox {
+  border-right: none;
+}
+.wrap .menu .treeView .treeItem {
+  margin-right: 32px;
+}
+.wrap .menu .treeView .treeItem .title {
+  width: auto;
+}
+.wrap .menu .treeView .treeItem .item-switch {
+  right: 0px;
+}
+.wrap .contentBody {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 240px;
+  padding: 0 20px 20px 20px;
+  background: #fff;
+  min-width: 1000px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.wrap .iframe {
+  border: 1px solid #fff;
+  width: 100%;
+  height: 98%;
+  border-radius: 5px;
+}
+.wrap .layui-tab-title li {
+  color: #999;
+}
+.wrap .layui-tab-title li.layui-this {
+  color: #0c64b5;
+}
+.wrap .layui-tab-title .btn-back {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  transition: all .2s;
+  -webkit-transition: all .2s;
+  position: relative;
+  line-height: 40px;
+  min-width: 65px;
+  padding: 0 15px;
+  padding-left: 0;
+  text-align: center;
+  cursor: pointer;
+}
+.wrap .layui-tab-title .btn-back > i {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.wrap .layui-tab-content {
+  background: #fff;
+  background-image: url(../images/blankpage.png);
+  background-size: 300px 300px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.wrap .layui-tab-content .layui-tab-item {
+  height: 98%;
+  background: #fff;
+}
+.wrap .mapBox {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+.wrap .mapBox .map {
+  width: 100%;
+  height: 100%;
+}
+.wrap .mapBox .sichuan {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 13px;
+  color: #fff;
+  height: 25px;
+  line-height: 25px;
+}
+.wrap .mapBox .sichuan .title {
+  display: inline-block;
+  width: 175px;
+}
+.wrap .mapBox .sichuan .num {
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+  font-size: 27px;
+  color: #00DEFF ;
+  color: linear-gradient(top bottom, #00DEFF, #559CF2);
+}
+.wrap .suspensionBox {
+  height: 100%;
+  width: 80%;
+  position: absolute;
+  right: -80%;
+  top: 0;
+  background: #fff;
+  box-shadow: 0 25px 25px rgba(0, 0, 0, 0.2);
+  transition: all 1s ease;
+}
+.treeBox {
+  border-right: 1px solid #eee;
+}
+.tableBox {
+  padding: 10px;
+}
+/*
+.layui-tree-branch,.layui-tree-leaf{
+	opacity:0
+}
+.layui-tree li ul{
+	margin-left:0
+}*/
+.pension-info .layui-input-block {
+  float: left;
+  width: 42%;
+  margin-left: 0;
+}
+.pension-info .layui-form-label{
+  width:auto;
+}
+.pension-label{
+  padding: 9px 15px;
+  color: red;
+}
+.f1{
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  width: 40px;
+  margin: 6px;
+}
+.f1 input{
+  width: 36px;
+}
+.unit{
+  padding-right: 6px;
+  color: red;
+}
+.title-word{
+  color: red;
+}
+.problem-fill-blank{
+  display: none;
+}
+.safe-data td input{
+  border: 0px;
+  text-align: center;
+}
+.milieu-info .layui-input-block {
+  float: left;
+  width: 42%;
+  margin-left: 0;
+}
+.milieu-info .layui-form-label{
+  width:150px;
+}
+.milieu-info .unit{
+  width: auto;
+}
+.milieu{
+  height: 40px;
+  font-size: 18px;
+  line-height: 40px;
+  color: red;
+}
+/*问卷管理2*/
+.ask-name{
+  text-align: center;
+  font-size: 18px;
+  height: 50px;
+  line-height: 50px;
+  font-weight: bold;
+}
+.ask-table{
+  width: 50%;
+}
+.statistics-table{
+  width: 50%;
+  float: left;
+}
+.add-ask-btn{
+  width: auto;
+  font-size: 16px;
+
+  height: 40px;
+}
+.add-ask-btn .ask-btn{
+  color: #fff;
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  margin-right: 14px;
+  float: left;
+  line-height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.add-ask-btn .ask-btn:hover{
+  opacity: 0.8;
+}
+
+.add-ask-btn .add-btn{
+  background-color:#108ee9  ;
+}
+
+.add-ask-btn .ask-set-btn{
+  background-color:#009688 ;
+}
+.ask-chapter-content{
+  padding-top: 40px;
+}
+.ask-chapter-content .ask-item {
+  padding-bottom: 30px;
+}
+.ask-chapter-content .ask-number{
+  float: left;
+  width: 50px;
+  height: auto;
+}
+.clearfloat:after{
+  display:block;clear:both;content:"";visibility:hidden;height:0
+}
+.ask-chapter-content .min-No{
+  width: 35px;
+  height: 20px;
+  text-align: center;
+}
+.ask-centent{
+  float: left;
+  width: 600px;
+}
+.ask-centent .problem{
+  padding-left: 16px;
+  width: 100%;
+  border: 1px solid #666;
+  height: 35px;
+  line-height: 35px;
+  border-bottom: 0px;
+}
+.ask-centent .ask-options{
+  width: 100%;
+  border: 1px solid #666;
+  height: 35px;
+  display: inline-block;
+  text-align: center;
+  line-height: 35px;
+}
+.ask-centent .ask-operating{
+  width: 400px;
+  text-align: center;
+}
+.ask-centent .ask-operating li{
+  float: left;
+  padding:0px 5px ;
+  display: block;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #108ee9;
+  color: #fff;
+  margin-right: 14px;
+  margin-top: 1px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+
+}
+.ask-centent .ask-operating li:hover{
+  opacity: 0.8;
+}
+.ask-centent .ask-operating .ask-del{
+  background-color: #FF5722;
+}
+.ask-centent .ask-operating .ask-edit{
+
+  background-color: #009688;
+}
+.ask-centent .fill-blank{
+  border: 1px solid #666;
+  padding: 10px 16px;
+  line-height: 20px;
+}
+.ask-centent .fill-blank-input{
+  width: 50px;
+  height: 20px;
+  text-align: center;
+
+}

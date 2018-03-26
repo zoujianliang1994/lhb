@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible">
+<base href="">
+<script>
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+</script>
+<head>
+<!-- jsp文件头和头部 -->
+	<link rel="stylesheet" type="text/css" href="../../../static/source/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/source/public/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/source/public/plugin/css/treeView.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/source/public/plugin/css/sTree.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/source/public/css/list.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/source/public/css/index.css">
+	<link rel="stylesheet" type="text/css" href="../../../static/source/public/css/llw.css">
+	<link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_397753_lzjp8zoy5g1wz5mi.css">
+
+    <style>
+		.layui-elem-quote{
+			position:relative;
+		}
+		.readCard{
+			position:absolute;
+			right:5px;
+			top:2px
+		}
+
+
+	</style>
+</head>
+<object classid="clsid:4B3CB088-9A00-4D24-87AA-F65C58531039" id="SynCardOcx1" codeBase="SynCardOcx.CAB#version=1,0,0,1" width="0" height="0" ></object>
+<body >
+
+
+
+<div class="edit_menu" style="padding-top: 0px;" >
+
+	<form action="../../../priorityCard/add.do" class="layui-form"  name="form1" id="form1" >
+
+
+		<blockquote class="layui-elem-quote">当事人信息
+			<input  class="layui-btn layui-btn-blue layui-btn-small readCard" type="button" value="读取身份证"  id="readCard"/>
+		</blockquote>
+
+		<div class="layui-form-item">
+			<div class="layui-row">
+				<div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+					<label class="layui-form-label"><i class="require">*</i>姓名：</label>
+					<div class="layui-input-block">
+						<input   name="partyName" maxlength="10" id="partyName" placeholder="这里输入姓名" value="" type="text" placeholder="请输入角姓名"
+								class="layui-input">
+					</div>
+				</div>
+
+
+				<div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+					<label class="layui-form-label"><i class="require">*</i>身份证号：</label>
+					<div class="layui-input-block">
+						<input   name="partyIdCard" maxlength="18" id="partyIdCard" placeholder="这里输入身份证号" value="" type="text" placeholder="这里输入身份证号"
+								class="layui-input">
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+	<div class="btnbox" >
+		<button id="sure" class="layui-btn layui-btn-primary layui-btn-small">保存</button>
+		<button id="cancel" class="layui-btn layui-btn-primary layui-btn-small">取消</button>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="../../../static/source/public/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../../../static/source/layui/layui.all.js"></script>
+<script type="text/javascript" src="../../../static/source/public/js/echarts.min.js"></script>
+<script type="text/javascript" src="../../../static/source/public/plugin/js/treeView.js"></script>
+<script type="text/javascript" src="../../../static/source/public/plugin/js/sTree.js"></script>
+<script type="text/javascript" src="../../../static/source/public/js/llw.js"></script>
+<script type="text/javascript" src="../../../static/source/public/js/common.js"></script>
+
+<script type="text/javascript" src="../../../static/js/jquery.form.js"></script>
+
+<script type="text/javascript" src="../../../static/js/jquery.base64.js"></script>
+<script type="text/javascript" src="../../../static/source/public/js/socket.io/socket.io.js"></script>
+	<!--提示框-->
+	<script type="text/javascript">
+
+
+        //获取当年年龄
+        function getAge(card) {
+            var cardYear = card.substr(6, 4);
+            var cardDay = card.substr(10, 4);
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDay();
+            if (month < 10) {
+                month = "0" + month
+            }
+            if (day < 10) {
+                day = "0" + day
+            }
+            var day = month + "" + day;
+            if (parseInt(cardDay) > parseInt(day)) {
+                year = year - 1;
+            }
+            return year - cardYear
+        }
+
+        $(document).ready(function(){
+
+            $("#sure").on("click",function(){
+                if ($("#partyName").val() == "") {
+                    layer.tips('请输入姓名',  $("#partyName"), {
+                        tips: [4, '#D16E6C'],
+                        time: 4000
+                    });
+                    $("#partyName").focus();
+                    return false;
+                }
+                if ($("#partyIdCard").val() == "") {
+                    layer.tips('请输入身份证',  $("#partyIdCard"), {
+                        tips: [4, '#D16E6C'],
+                        time: 4000
+                    });
+                    $("#partyIdCard").focus();
+                    return false;
+                }
+
+                if(getAge($("#partyIdCard").val())<60){
+                    layer.tips('该人员年龄小于60岁',  $("#partyIdCard"), {
+                        tips: [4, '#D16E6C'],
+                        time: 4000
+                    });
+                    $("#partyIdCard").focus();
+                    return false;
+				}
+
+
+               var page =GetQueryString("currentPage");
+               var sum ="&selAreaCode="+GetQueryString("selAreaCode")+"&selIdcade="+GetQueryString("selIdcade")+"&selDate="+GetQueryString("selDate")+""
+
+
+                $("#form1").ajaxSubmit({
+                    type: 'post',
+                    dataType:"html",
+                    success: function(data) {
+                        var jso = JSON.parse(data)
+                        if ("success" == jso.msg) {
+                            parent.layer.transmit.location.href = "../../../priorityCard/list.do?currentPage=" + page + sum;
+                            parent.layer.closeAll();
+                        } else if ("error" == jso.msg) {
+                            layer.msg('系统异常,保存失败!', {icon: 5});
+                        } else if("false" == jso.msg){
+
+                            var sureLayer= parent.layer.confirm("该人员没有个人档案 是否确认新增", {
+                                btn : [ '确定', '取消' ] //按钮
+                                ,resize : false
+                                ,title : "提示"
+                                ,maxWidth : 800
+                            }, function(index) {
+
+                                parent.parent.layer.close(sureLayer);
+                                parent.parent.layer.edit = window;
+                                parent.parent.layer.open({
+                                    title: "新增",
+                                    type: 2,
+                                    content: 'views/jsp/personalinfo/personalinfo_readCard.html',
+                                    area: ["1000px", "560px"]
+                                });
+                            });
+
+
+						} else if("false2" == jso.msg){
+                            layer.msg('该人员近期已办理优待证！', {icon: 5});
+						}
+                    }
+				});
+
+            });
+
+            $("#cancel").on("click",function(){
+                parent.layer.closeAll();
+            })
+
+
+            $("#readCard").on("click",function(){
+                //alert(navigator.userAgent);
+                ReadCard_onclick()
+				/*   if((navigator.userAgent.indexOf('MSIE') >= 0) ){
+				 ReadCard_onclick()
+				 }else{
+				 layer.msg("仅支持IE浏览器读取二代身份证",{icon:2})
+				 }  */
+
+            })
+
+            function FindReader_onclick()
+            {
+                var str;
+                str = SynCardOcx1.FindReader();
+                if (str > 0)
+                {
+                    if(str>1000)
+                    {
+                        str ="读卡器连接在USB " + str ;
+                    }
+                    else
+                    {
+                        str ="读卡器连接在COM " + str ;
+                    }
+                }
+                else
+                {
+                    str = "没有找到读卡器";
+                    alert(str);
+                }
+                //alert(str);
+
+            }
+
+            function ReadCard_onclick()
+            {
+
+
+                FindReader_onclick();
+
+
+
+                var nRet;
+                SynCardOcx1.SetReadType(0);
+
+
+                nRet = SynCardOcx1.ReadCardMsg();
+                if(nRet==0)
+                {
+                    //姓名
+                    var names=SynCardOcx1.NameA;
+                    names = names.trim();
+                    document.getElementById("partyName").value=names
+                    //身份证号
+                    document.getElementById("partyIdCard").value=SynCardOcx1.CardNo
+
+
+                }else{
+                    layer.msg("读取失败，请重试",{icon:2})
+                }
+            }
+        });
+
+
+	</script>
+</body>
+</html>
+

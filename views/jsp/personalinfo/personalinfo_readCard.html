@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="zh">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible">
+
+
+<base href="">
+<script>
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)return unescape(r[2]);
+        return null;
+    }
+</script>
+<head>
+    <title>老龄人口编辑</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/source/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/source/public/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/source/public/plugin/css/treeView.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/source/public/plugin/css/sTree.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/source/public/css/list.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/source/public/css/index.css">
+    <link rel="stylesheet" type="text/css" href="../../../static/source/public/css/llw.css">
+    <link rel="stylesheet" type="text/css" href="https://at.alicdn.com/t/font_397753_lzjp8zoy5g1wz5mi.css">
+</head>
+<style>
+
+    .layui-form-label {
+        width: 120px
+    }
+
+    .edit_menu {
+        padding: 0 20px;
+    }
+
+    .readCard {
+        position: absolute;
+        right: 5px;
+        top: 2px
+    }
+
+    .layui-elem-quote {
+        position: relative;
+    }
+
+    .layui-input-block {
+        margin-left: 150px;
+    }
+</style>
+
+
+<object classid="clsid:4B3CB088-9A00-4D24-87AA-F65C58531039" id="SynCardOcx1" codeBase="SynCardOcx.CAB#version=1,0,0,1"
+        width="0" height="0">
+</object>
+<body>
+<div class="edit_menu">
+
+
+    <form action="saveU.do" class="layui-form" id="editForm" lay-filter="editForm" method="post">
+        <input type="hidden" value="" name="personal_info_id" id="personal_info_id"/>
+        <blockquote class="layui-elem-quote ">基础信息
+            <input class="layui-btn layui-btn-blue layui-btn-small readCard" type="button" value="读取身份证" id="readCard"/>
+        </blockquote>
+        <div class="layui-form-item">
+            <div class="layui-row">
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label"><i class="require">*</i>姓名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="xm" id="xm" readonly style="background-color:#f2f2f2"
+                               placeholder="请输入姓名"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label"><i class="require">*</i>身份证号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="sfz" id="sfz" readonly style="background-color:#f2f2f2"
+                               placeholder="请输入身份证号"
+                               autocomplete="off"
+                               class="layui-input" maxlength="18">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label"><i class="require">*</i>年龄：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="age" id="age" readonly style="background-color:#f2f2f2"
+                               placeholder="请输入年龄"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label"><i class="require">*</i>民族：</label>
+                    <div class="layui-input-block">
+
+                        <select name="mz" class="layui-input-inline" id="mz">
+                            <option value="01">汉族</option>
+                            <option value="02">蒙古族</option>
+                            <option value="03">回族</option>
+                            <option value="04">藏族</option>
+                            <option value="05">维吾尔族</option>
+                            <option value="06">苗族</option>
+                            <option value="07">彝族</option>
+                            <option value="08">壮族</option>
+                            <option value="09">布依族</option>
+                            <option value="10">朝鲜族</option>
+                            <option value="11">满族</option>
+                            <option value="12">侗族</option>
+                            <option value="13">瑶族</option>
+                            <option value="14">白族</option>
+                            <option value="15">土家族</option>
+                            <option value="16">哈尼族</option>
+                            <option value="17">哈萨克族</option>
+                            <option value="18">傣族</option>
+                            <option value="19">黎族</option>
+                            <option value="20">傈僳族</option>
+                            <option value="21">佤族</option>
+                            <option value="22">畲族</option>
+                            <option value="23">高山族</option>
+                            <option value="24">拉祜族</option>
+                            <option value="25">水族</option>
+                            <option value="26">东乡族</option>
+                            <option value="27">纳西族</option>
+                            <option value="28">景颇族</option>
+                            <option value="29">柯尔克孜族</option>
+                            <option value="30">土族</option>
+                            <option value="31">达斡尔族</option>
+                            <option value="32">仫佬族</option>
+                            <option value="33">羌族</option>
+                            <option value="34">布朗族</option>
+                            <option value="35">撒拉族</option>
+                            <option value="36">毛南族</option>
+                            <option value="37">仡佬族</option>
+                            <option value="38">锡伯族</option>
+                            <option value="39">阿昌族</option>
+                            <option value="40">普米族</option>
+                            <option value="41">塔吉克族</option>
+                            <option value="42">怒族</option>
+                            <option value="43">乌孜别克族</option>
+                            <option value="44">俄罗斯族</option>
+                            <option value="45">鄂温克族</option>
+                            <option value="46">德昂族</option>
+                            <option value="47">保安族</option>
+                            <option value="48">裕固族</option>
+                            <option value="49">京族</option>
+                            <option value="50">塔塔尔族</option>
+                            <option value="51">独龙族</option>
+                            <option value="52">鄂伦春族</option>
+                            <option value="53">赫哲族</option>
+                            <option value="54">门巴族</option>
+                            <option value="55">珞巴族</option>
+                            <option value="56">基诺族</option>
+                            <option value="91">其他族</option>
+                            <option value="92">外国血统</option>
+                            <option value="93">外国民族</option>
+                        </select>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+
+            <div class="layui-row">
+
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label"><i class="require">*</i>性别：</label>
+
+                    <div class="layui-input-block">
+                        <input id="r0" type="radio" readonly name="xb" value="0" title="男">
+                        <input id="r1" type="radio" readonly name="xb" value="1" title="女">
+                    </div>
+                </div>
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label"><i class="require">*</i>户籍地址：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="hjdz" id="hjdz" readonly style="background-color:#f2f2f2"
+                               placeholder="请输入户籍地址"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+
+            <div class="layui-row">
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label"><i class="require">*</i>常住地址：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="czdz" id="czdz" required lay-verify="required"
+                               placeholder="请输入常住地址"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <blockquote class="layui-elem-quote">扩展信息</blockquote>
+        <div class="layui-form-item">
+            <div class="layui-row">
+
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                    <label class="layui-form-label">人员类别：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" lay-skin="primary" name="type" value="2" title="低保"/><input
+                            type="checkbox" lay-skin="primary" name="type" value="3" title="五保"/><input type="checkbox"
+                                                                                                        lay-skin="primary"
+                                                                                                        name="type"
+                                                                                                        value="4"
+                                                                                                        title="三无"/><input
+                            type="checkbox" lay-skin="primary" name="type" value="5" title="空巢"/><input type="checkbox"
+                                                                                                        lay-skin="primary"
+                                                                                                        name="type"
+                                                                                                        value="6"
+                                                                                                        title="优抚"/><input
+                            type="checkbox" lay-skin="primary" name="type" value="7" title="其它"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                    <label class="layui-form-label">经济来源：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" lay-skin="primary" name="jjly" value="1" title="离退休养老金"/><input
+                            type="checkbox" lay-skin="primary" name="jjly" value="2" title="劳务收入"/><input
+                            type="checkbox" lay-skin="primary" name="jjly" value="3" title="国家供养"/><input
+                            type="checkbox" lay-skin="primary" name="jjly" value="4" title="子女供养"/><input
+                            type="checkbox" lay-skin="primary" name="jjly" value="5" title="其它"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12">
+                    <label class="layui-form-label">参保情况：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" lay-skin="primary" name="cbqk" value="1" title="城镇职工基本医保"/><input
+                            type="checkbox" lay-skin="primary" name="cbqk" value="2" title="新农合医保"/><input
+                            type="checkbox" lay-skin="primary" name="cbqk" value="3" title="城乡居民大病保险"/><input
+                            type="checkbox" lay-skin="primary" name="cbqk" value="4" title="职工大额医疗补助"/><input
+                            type="checkbox" lay-skin="primary" name="cbqk" value="5" title="公费医疗"/><input
+                            type="checkbox" lay-skin="primary" name="cbqk" value="6" title="商业保险"/><input
+                            type="checkbox" lay-skin="primary" name="cbqk" value="7" title="其它"/><input type="checkbox"
+                                                                                                        lay-skin="primary"
+                                                                                                        name="cbqk"
+                                                                                                        value="9"
+                                                                                                        title="城镇居民基本医保"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">自理能力：</label>
+                    <div class="layui-input-block">
+                        <select name="zlll" class="layui-input-inline">
+                            <option value="1">自理</option>
+                            <option value="2">失能</option>
+                            <option value="3">半失能</option>
+                        </select>
+
+                    </div>
+                </div>
+
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">健康状况：</label>
+                    <div class="layui-input-block">
+                        <select name="jkzk" class="layui-input-inline">
+                            <option value="1">良好</option>
+                            <option value="2">特殊疾病</option>
+                            <option value="3">严重疾病</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">居住状况：</label>
+                    <div class="layui-input-block">
+                        <select name="jzzk" class="layui-input-inline">
+                            <option value="1">独居</option>
+                            <option value="2">与配偶同住</option>
+                            <option value="3">与子女同住</option>
+                            <option value="4">其他</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label"><i class="require">*</i>行政区划：</label>
+                    <input type="hidden" value="" name="xzqh_code" id="SZQY_CODE"/>
+                    <input type="hidden" value="" name="xzqh" id="SZQY" required>
+                    <div class="layui-input-block sTree" id="sTree">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+
+            <div class="layui-row">
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">社保账号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="sbzh" id="sbzh" required lay-verify="required"
+                               placeholder="请输入社保账号"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+				<div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                                <label class="layui-form-label">银行开户行、账号：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" value="" name="yhzh" id="yhzh" required lay-verify="required" placeholder="请输入银行账号及开户行名称"
+                                           autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">养老方式：</label>
+
+                    <div class="layui-input-block">
+                        <select name="ylfs" class="layui-input-inline">
+                            <option value="1">居家养老</option>
+                            <option value="2">社区养老</option>
+                            <option value="3">机构养老</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">养老机构：</label>
+                    <div class="layui-input-block">
+                        <input type="hidden" value="" name="jg_id" id="jg_id"/>
+                        <input type="text" value="" name="yljg" id="yljg" required lay-verify="required"
+                               placeholder="请输入入住养老机构名称"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 ">
+                    <label class="layui-form-label">是否购买意外保险：</label>
+                    <div class="layui-input-block">
+                        <select name="ywsh" class="layui-input-inline">
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 ">
+                    <label class="layui-form-label">购买意外保险方式：</label>
+                    <div class="layui-input-block">
+                        <select name="ywsh_type" class="layui-input-inline">
+                            <option value="1">自己或配偶购买</option>
+                            <option value="2">子女购买</option>
+                            <option value="3">单位购买</option>
+                            <option value="4">赠与</option>
+                            <option value="5">其他</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">是否参加老年大学：</label>
+                    <div class="layui-input-block">
+                        <select name="is_lndx" class="layui-input-inline">
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">老年大学：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="lndx" id="lndx" required lay-verify="required"
+                               placeholder="请输入老年大学名称"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">是否参加老年协会：</label>
+                    <div class="layui-input-block">
+                        <select name="is_lnxh" class="layui-input-inline">
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">老年协会：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="lnxh" id="lnxh" required lay-verify="required"
+                               placeholder="请输入老年协会名称"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">是否建立健康档案：</label>
+                    <div class="layui-input-block">
+                        <select name="is_jlda" class="layui-input-inline">
+                            <option value="1">是</option>
+                            <option value="2">否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+                    <label class="layui-form-label">健康档案编号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="dabh" id="dabh" required lay-verify="required"
+                               placeholder="请输入健康档案编号"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 label-long">
+                    <label class="layui-form-label ">享受养老服务补贴开始日期 ：</label>
+                    <div class="layui-input-block ">
+                        <input type="text" value="" name="ylbt_begin" id="ylbt_begin" required lay-verify="required"
+                               placeholder="请输入养老服务补贴开始日期"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 label-long">
+                    <label class="layui-form-label">享受养老服务补贴金额(元/月)：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="ylbt_je" id="ylbt_je" required lay-verify="required"
+                               placeholder="请输入养老服务补贴金额"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 label-long">
+                    <label class="layui-form-label">享受护理补贴开始日期：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="hlbt_begin" id="hlbt_begin" required lay-verify="required"
+                               placeholder="请输入护理补贴开始日期"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 label-long">
+                    <label class="layui-form-label">享受护理补贴金额(元/月)：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="hlbt_je" id="hlbt_je" required lay-verify="required"
+                               placeholder="请输入护理补贴金额"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 label-long">
+                    <label class="layui-form-label">领取高龄津贴开始日期：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="gljt_begin" id="gljt_begin" required lay-verify="required"
+                               placeholder="请输入高龄津贴开始日期"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 label-long">
+                    <label class="layui-form-label">领取高龄津贴金额(元/月)：</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="gljt_je" id="gljt_je" required lay-verify="required"
+                               placeholder="请输入高龄津贴金额"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+    <div class="btnbox" id="btnDiv" hidden="true">
+        <button id="sure" class="layui-btn layui-btn-primary layui-btn-small">保存</button>
+        <button id="cancel" class="layui-btn layui-btn-primary layui-btn-small">取消</button>
+    </div>
+
+
+</div>
+<script type="text/javascript" src="../../../static/source/public/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../../../static/source/layui/layui.all.js"></script>
+<script type="text/javascript" src="../../../static/source/public/js/echarts.min.js"></script>
+<script type="text/javascript" src="../../../static/source/public/plugin/js/treeView.js"></script>
+<script type="text/javascript" src="../../../static/source/public/plugin/js/sTree.js"></script>
+<script type="text/javascript" src="../../../static/source/public/js/llw.js"></script>
+<script type="text/javascript" src="../../../static/source/public/js/common.js"></script>
+<script type="text/javascript" src="../../../static/source/public/js/socket.io/socket.io.js"></script>
+
+
+<script>
+    $(function () {
+        var form = layui.form;
+//        //selset事件
+//        form.on('select(test)', function (data) {
+//            console.log(data)
+//        });
+
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#ylbt_begin'
+            });
+            laydate.render({
+                elem: '#hlbt_begin'
+            });
+            laydate.render({
+                elem: '#gljt_begin'
+            });
+        });
+        //获取行政区地址
+        $.post("../../../areaCode/listSubAreaCodeByParentId.do", {parentId: 0}, function (data) {
+            var sTree = $.Stree({
+                el: $("#sTree"),
+                isSingle: true,  //单选
+                data: data,
+                callback: function () {
+                    if (this.arr == undefined || this.arr == "") {
+                        return
+                    }
+                    if (this.arr[0].level != 4) {
+                        this.$el.find(".lev" + this.arr[0].lev).children(".treeItem ").removeClass("active");
+                        this.arr = [];
+                        this.$el.find(".input").val("");
+                        layer.tips('请选择社区或村', $("#sTree"), {
+                            tips: [3, '#D16E6C'],
+                            time: 4000
+                        });
+                    } else {
+                        this.$el.find(".lev0").hide();
+                    }
+                    $("#SZQY_CODE").val($.getString(this.arr, 'areaCode'));
+                    $("#SZQY").val($.getString(this.arr, 'title'));
+                },
+                switchCallback: function (obj) {
+                    var id = obj.id;
+                    if (obj.children == "") {
+                        getAddress(id, sTree)
+                    }
+
+                }
+            });
+        });
+
+        var TYPE = '2';
+        if (1 == TYPE) {
+            $("#btnDiv").hide();
+            $("input,select,radio,textarea").attr("disabled", "disabled").css("background-color", "#f2f2f2");
+            $("input").removeAttr("placeholder", "");
+        } else {
+            $("#btnDiv").show();
+        }
+        //提交
+        $("#sure").on("click", function () {
+
+            if ($("#xm").val() == "") {
+                layer.tips('姓名不能为空', $("#xm"), {
+                    tips: [3, '#D16E6C'],
+                    time: 4000
+                });
+                $("#xm").focus();
+                return false;
+            }
+            var card = $("#sfz").val();
+            if (card == "") {
+                layer.tips('身份证不能为空', $("#sfz"), {
+                    tips: [3, '#D16E6C'],
+                    time: 4000
+                });
+                $("#sfz").focus();
+                return false;
+            }
+
+            if ($("#hjdz").val() == "") {
+                layer.tips('户籍地址不能为空', $("#hjdz"), {
+                    tips: [3, '#D16E6C'],
+                    time: 4000
+                });
+                $("#hjdz").focus();
+                return false;
+            }
+
+            if ($("#czdz").val() == "") {
+                layer.tips('常住地址不能为空', $("#czdz"), {
+                    tips: [3, '#D16E6C'],
+                    time: 4000
+                });
+                $("#czdz").focus();
+                return false;
+            }
+
+            if ($("#SZQY_CODE").val() == "") {
+                layer.tips('行政区划不能为空', $("#sTree"), {
+                    tips: [3, '#D16E6C'],
+                    time: 4000
+                });
+                $("#sTree").focus();
+                return false;
+            }
+
+            var currentPage = GetQueryString("currentPage");
+            var xzqh_code = GetQueryString("xzqh_code");
+
+            $.post('../../../personalInfo/saveU.do', $('#editForm').serialize(), function (data) {
+                if ("success" == data.result) {
+                    parent.layer.edit.location.href = '../../../personalInfo/listUsers.do?currentPage=' + currentPage + '&xzqh_code=' + xzqh_code;
+                    parent.layer.closeAll();
+                    parent.parent.layer.closeAll();
+                } else if ("error" == data.result) {
+                    layer.msg('系统异常,保存失败!', {icon: 5});
+                } else {
+                    layer.msg(data.result, {icon: 5});
+                }
+            });
+        });
+
+        $("#cancel").on("click", function () {
+            parent.layer.closeAll();
+        });
+
+        /*$("#SZQY").on("click", function () {
+         parent.layer.transmit = window;
+         parent.parent.parent.layer.open({
+         title: "行政区划",
+         type: 2,
+         content: '<%=basePath%>areaCode/listAreaCodeTree.do?pid=0',
+         area: ["650px", "550px"]
+         });
+         });*/
+
+        function getAddress(id, sTree) {
+            $.post("../../../areaCode/listSubAreaCodeByParentId", {parentId: id}, function (data) {
+                //数据
+                sTree.findOne(id, function (obj) {
+                    if (obj.children == "") {
+                        obj.children = data;
+                    }
+
+                    sTree.rec(data, function (obj, index) {
+                        sTree.operation(obj, index);
+                    }, obj.lev)
+                });
+                //默认选中
+
+                sTree.cheakedOldData()
+                //展示
+
+            })
+        }
+
+        $("#readCard").on("click", function () {
+            //alert(navigator.userAgent);
+                ReadCard_onclick()
+
+        });
+
+        function FindReader_onclick() {
+            var str;
+            str = SynCardOcx1.FindReader();
+            if (str > 0) {
+                if (str > 1000) {
+                    str = "读卡器连接在USB " + str;
+                }
+                else {
+                    str = "读卡器连接在COM " + str;
+                }
+            }
+            else {
+                str = "没有找到读卡器";
+                alert(str);
+            }
+            //alert(str);
+
+        }
+
+        function ReadCard_onclick() {
+
+
+            FindReader_onclick();
+
+
+            var nRet;
+            SynCardOcx1.SetReadType(0);
+
+            /*   var str="D:\\Photo";
+             var nRets;
+             nRets= SynCardOcx1.SetPhotoPath(2,str);
+             if(nRets != 0) {
+
+             var str = "F:\\Photo";
+             nRets = SynCardOcx1.SetPhotoPath(2, str);
+             if (nRets != 0) {
+             var str = "E:\\Photo";
+             nRets = SynCardOcx1.SetPhotoPath(2, str);
+             if (nRets != 0) {
+             var str = "C:\\Photo";
+             nRets = SynCardOcx1.SetPhotoPath(2, str);
+             if(nRets != 0){
+             layer.msg("请以管理员方式运行IE浏览器",{icon:2})
+             return;
+             }
+             }
+             }
+             } */
+            nRet = SynCardOcx1.ReadCardMsg();
+            if (nRet == 0) {
+                var address = SynCardOcx1.Address;
+                address = address.replace(/(^\s*)|(\s*$)/g, "");
+                //姓名
+                document.getElementById("xm").value = SynCardOcx1.NameA;
+                //身份证号
+                document.getElementById("sfz").value = SynCardOcx1.CardNo;
+                //年龄
+                var age = getAge($("#sfz").val());
+                $("#age").val(age);
+
+                //民族选中
+                var nation = SynCardOcx1.Nation;
+                var select = document.getElementById("mz");
+                for (var i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value == nation) {
+                        select.options[i].selected = true;
+                        break;
+                    }
+                }
+                //户籍地址
+                document.getElementById("hjdz").value = address;
+                document.getElementById("czdz").value = address;
+
+                var sex = SynCardOcx1.Sex;
+                if (sex == 1) {
+                    $("#r0").attr("checked", "checked");
+                    form.render();
+                } else {
+                    $("#r1").attr("checked", "checked");
+                    form.render();
+                }
+                form.render('rodio');
+            } else {
+                layer.msg("读取失败，请重试", {icon: 2})
+            }
+        }
+
+
+        //获取当年年龄
+        function getAge(card) {
+            var cardYear = card.substr(6, 4);
+            var cardDay = card.substr(10, 4);
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDay();
+            if (month < 10) {
+                month = "0" + month
+            }
+            if (day < 10) {
+                day = "0" + day
+            }
+            var day = month + "" + day;
+            if (parseInt(cardDay) > parseInt(day)) {
+                year = year - 1;
+            }
+            return year - cardYear
+        }
+
+    });
+</script>
+</body>
+</html>
