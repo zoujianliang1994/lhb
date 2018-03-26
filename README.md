@@ -1,0 +1,1 @@
+#乐活邦项目都是jsp。没有前后端分离。前端部分主要在llw\llw-managementCenter\src\main\webapp当中的static文件夹和views文件夹
